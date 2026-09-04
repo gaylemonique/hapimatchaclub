@@ -25,6 +25,28 @@ export async function signInAdmin(_previousState: { error: string }, formData: F
   redirect("/admin");
 }
 
+export async function signUpAdmin(_previousState: { error: string; success: string }, formData: FormData) {
+  const email = String(formData.get("email") ?? "").trim();
+  const password = String(formData.get("password") ?? "");
+  if (!email || !password) return { error: "Enter an email and password.", success: "" };
+  if (password.length < 8) return { error: "Use a password with at least 8 characters.", success: "" };
+
+  const { client } = await requireAdmin();
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+  const { data, error } = await client.auth.signUp({
+    email,
+    password,
+    options: { emailRedirectTo: `${siteUrl}/admin` },
+  });
+
+  if (error) return { error: "We could not create that account. Check the details and try again.", success: "" };
+  if (data.session) await client.auth.signOut();
+  return {
+    error: "",
+    success: "Account created. Check your email to confirm it, then ask an administrator to grant admin access.",
+  };
+}
+
 export async function completeAdminInvite(formData: FormData) {
   const accessToken = String(formData.get("accessToken") ?? "");
   const refreshToken = String(formData.get("refreshToken") ?? "");
