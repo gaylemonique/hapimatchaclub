@@ -3,15 +3,17 @@
 :root { --color-bg: oklch(1 0 0); --color-surface: oklch(0.975 0.008 170); --color-ink: oklch(0.19 0.025 55); --color-primary: oklch(0.42 0.105 170); --color-primary-soft: oklch(0.92 0.035 170); --color-accent: oklch(0.66 0.18 25); --color-muted: oklch(0.48 0.025 55); --color-line: oklch(0.88 0.018 75); --shadow-sm: 0 6px 18px oklch(0.2 0.03 55 / 0.08); }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
-body { margin: 0; background: var(--color-bg); color: var(--color-ink); font-family: var(--font-body), sans-serif; }
+body { margin: 0; background: var(--color-bg); color: var(--color-ink); font-family: var(--font-body), sans-serif; padding-left: env(safe-area-inset-left); padding-right: env(safe-area-inset-right); }
 a { color: inherit; text-decoration: none; }
 button { font: inherit; }
 h1, h2, h3, p { margin: 0; }
 h1, h2, h3 { font-family: var(--font-display), serif; font-weight: 600; text-wrap: balance; }
+.button-primary:focus-visible, .button-secondary:focus-visible, .nav a:focus-visible, .brand:focus-visible, .filter:focus-visible, .nav-toggle:focus-visible, .footer-links a:focus-visible { outline: 3px solid var(--color-accent); outline-offset: 4px; }
 .site-header { align-items: center; display: flex; justify-content: space-between; margin: 0 auto; max-width: 1240px; padding: 22px 24px; }
 .brand { align-items: center; display: inline-flex; gap: 10px; font-size: 1.05rem; font-weight: 700; letter-spacing: -0.03em; }
 .brand-mark { align-items: center; background: var(--color-primary); border-radius: 50%; color: white; display: inline-flex; font-family: var(--font-display); font-size: 0.9rem; height: 31px; justify-content: center; width: 31px; }
 .nav { align-items: center; display: flex; gap: 25px; }
+.nav-toggle { background: transparent; border: 0; color: var(--color-ink); cursor: pointer; display: none; min-height: 44px; min-width: 44px; padding: 10px; }
 .nav a { color: var(--color-muted); font-size: 0.9rem; }
 .nav a:hover, .nav a:focus-visible { color: var(--color-primary); }
 .nav-cta, .button-primary { background: var(--color-primary); border: 0; border-radius: 999px; color: white; cursor: pointer; display: inline-flex; font-weight: 700; justify-content: center; padding: 13px 19px; transition: transform 180ms ease-out, background 180ms ease-out; }
@@ -57,8 +59,14 @@ h1, h2, h3 { font-family: var(--font-display), serif; font-weight: 600; text-wra
 .story-inner { display: grid; gap: 50px; grid-template-columns: .8fr 1.2fr; margin: 0 auto; max-width: 1240px; }
 .story h2 { color: white; font-size: clamp(2.5rem, 5vw, 4.5rem); }
 .story p { color: oklch(0.9 0.02 75); font-size: 1.08rem; line-height: 1.7; max-width: 52ch; }
-.site-footer { display: flex; justify-content: space-between; margin: 0 auto; max-width: 1240px; padding: 30px 24px 45px; }
-.site-footer small { color: var(--color-muted); }
+.site-footer { align-items: end; display: flex; justify-content: space-between; margin: 0 auto; max-width: 1240px; padding: 30px 24px max(45px, env(safe-area-inset-bottom)); }
+.site-footer small { color: var(--color-muted); display: block; font-size: .86rem; margin-top: 12px; }
+.footer-links { display: flex; gap: 20px; }
+.footer-links a { color: var(--color-muted); font-size: .9rem; }
+.footer-links a:hover { color: var(--color-primary); }
+.simple-page { margin: 0 auto; max-width: 1240px; min-height: 55vh; padding: clamp(64px, 10vw, 140px) 24px; }
+.simple-page h1 { font-size: clamp(3.2rem, 8vw, 7rem); line-height: .95; margin: 18px 0 24px; max-width: 10ch; }
+.simple-page > p:last-child { color: var(--color-muted); font-size: 1.08rem; line-height: 1.65; max-width: 42ch; }
 .menu-page { margin: 0 auto; max-width: 1240px; padding: 50px 24px 100px; }
 .menu-intro { align-items: flex-end; display: flex; justify-content: space-between; gap: 30px; margin-bottom: 35px; }
 .menu-intro h1 { font-size: clamp(3.2rem, 7vw, 6rem); line-height: .95; }
@@ -67,5 +75,5 @@ h1, h2, h3 { font-family: var(--font-display), serif; font-weight: 600; text-wra
 .filter { background: transparent; border: 1px solid var(--color-line); border-radius: 999px; color: var(--color-muted); cursor: pointer; padding: 10px 15px; white-space: nowrap; }
 .filter.active, .filter:hover { background: var(--color-primary); border-color: var(--color-primary); color: white; }
 @media (max-width: 820px) { .hero-grid, .story-inner { grid-template-columns: 1fr; } .hero-art { min-height: 390px; } .product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .menu-intro { display: block; } .menu-intro p { margin-top: 20px; } }
-@media (max-width: 560px) { .site-header { padding: 18px 18px; } .nav { gap: 14px; } .nav a:not(.nav-cta) { display: none; } .nav-cta { padding: 11px 14px; } .hero { padding: 45px 18px 70px; } .hero h1 { font-size: clamp(3.5rem, 18vw, 5.6rem); } .hero-art { min-height: 340px; } .section, .menu-page { padding-left: 18px; padding-right: 18px; } .section-heading { align-items: start; display: block; } .section-link { display: inline-block; margin-top: 14px; } .product-grid { gap: 12px; } .product-media { height: 180px; } .product-media::before { height: 120px; width: 96px; } .product-info { padding: 13px; } .product-info p { font-size: .78rem; } .site-footer { padding-left: 18px; padding-right: 18px; } }
+@media (max-width: 560px) { .site-header { padding: 18px; position: relative; } .nav-toggle { display: inline-flex; align-items: center; justify-content: center; } .nav { background: var(--color-bg); box-shadow: var(--shadow-sm); display: none; flex-direction: column; gap: 4px; left: 18px; padding: 12px; position: absolute; right: 18px; top: 76px; z-index: 20; } .nav.is-open { display: flex; } .nav a { min-height: 44px; padding: 12px; width: 100%; } .nav-cta { padding: 12px; } .hero { padding: 45px 18px 70px; } .hero h1 { font-size: clamp(3.5rem, 18vw, 5.6rem); } .hero-art { min-height: 340px; } .section, .menu-page { padding-left: 18px; padding-right: 18px; } .section-heading { align-items: start; display: block; } .section-link { display: inline-block; margin-top: 14px; } .product-grid { gap: 12px; } .product-media { height: 180px; } .product-media::before { height: 120px; width: 96px; } .product-info { padding: 13px; } .product-info p { font-size: .78rem; } .site-footer { align-items: start; display: block; padding-left: 18px; padding-right: 18px; } .footer-links { margin-top: 22px; } .simple-page { padding-left: 18px; padding-right: 18px; } }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { transition-duration: .01ms !important; } }
