@@ -10,7 +10,7 @@ export default async function AdminPage() {
 
   const [{ data: categories }, { data: products }] = await Promise.all([
     client.from("categories").select("id, name, is_active").order("display_order"),
-    client.from("products").select("id, name, slug, is_available, categories(name)").order("display_order"),
+    client.from("products").select("id, name, slug, description, featured, is_available, category_id, categories(name), product_variants(id, name, size, price, original_price)").order("display_order"),
   ]);
 
   return <SiteShell><main className="admin-page"><div className="admin-header"><div><p className="eyebrow">Staff access</p><h1>Hapi admin</h1><p className="admin-lede">Update the menu visibility without editing code.</p></div><form action={signOutAdmin}><button className="button-secondary" type="submit">Sign out</button></form></div><AdminProductList categories={categories ?? []} products={products ?? []} /></main></SiteShell>;
