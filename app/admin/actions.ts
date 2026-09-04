@@ -109,3 +109,43 @@ export async function deleteVariant(formData: FormData) {
   await client.from("product_variants").delete().eq("id", id);
   revalidatePath("/admin"); revalidatePath("/"); revalidatePath("/menu");
 }
+
+export async function saveAddOn(formData: FormData) {
+  const { client, user } = await requireAdmin();
+  if (!user) return;
+  const id = String(formData.get("id") ?? "");
+  const name = String(formData.get("name") ?? "").trim();
+  const price = Number(formData.get("price"));
+  if (!name || !Number.isFinite(price) || price < 0 || (id && !uuidPattern.test(id))) return;
+  const payload = { name, description: String(formData.get("description") ?? "").trim() || null, price, is_available: formData.get("isAvailable") === "on" };
+  const result = id ? await client.from("add_ons").update(payload).eq("id", id) : await client.from("add_ons").insert(payload);
+  if (result.error) return;
+  revalidatePath("/admin"); revalidatePath("/menu");
+}
+
+export async function saveOrderingChannel(formData: FormData) {
+  const { client, user } = await requireAdmin();
+  if (!user) return;
+  const id = String(formData.get("id") ?? "");
+  const label = String(formData.get("label") ?? "").trim();
+  const url = String(formData.get("url") ?? "").trim();
+  const type = String(formData.get("type") ?? "other");
+  if (!label || !/^https?:\/\//i.test(url) || !["delivery", "social", "direct", "other"].includes(type) || (id && !uuidPattern.test(id))) return;
+  const payload = { label, url, type, is_active: formData.get("isActive") === "on" };
+  const result = id ? await client.from("ordering_channels").update(payload).eq("id", id) : await client.from("ordering_channels").insert(payload);
+  if (result.error) return;
+  revalidatePath("/admin"); revalidatePath("/order");
+}
+
+export async function uploadProductImage(formData: FormData) {
+  const { client, user } = await requireAdmin();
+  const productId = String(formData.get("productId") ?? "");
+  const file = formData.get("image");
+  if (!user || !uuidPattern.test(productId) || !(file instanceof File) || file.size === 0 || file.size > 5_000_000 || !["image/jpeg", "image/png", "image/webp"].includes(file.type)) return;
+  const path = `${productId}/${crypto.randomUUID()}-${file.name.replace(/[^a-z0-9._-]/gi, "-")}`;
+  const upload = await client.storage.from("product-images").upload(path, file, { contentType: file.type, upsert: false });
+  if (upload.error) return;
+  const { data } = client.storage.from("product-images").getPublicUrl(path);
+  await client.from("products").update({ image_url: data.publicUrl }).eq("id", productId);
+  revalidatePath("/admin"); revalidatePath("/"); revalidatePath("/menu");
+}
