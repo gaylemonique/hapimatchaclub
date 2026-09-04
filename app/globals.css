@@ -42,7 +42,8 @@ h1, h2, h3 { font-family: var(--font-display), serif; font-weight: 600; text-wra
 .product-card { background: var(--color-surface); border-radius: 14px; overflow: hidden; transition: box-shadow 180ms ease-out, transform 180ms ease-out; }
 .product-card:hover { box-shadow: var(--shadow-sm); transform: translateY(-3px); }
 .product-card:focus-within { box-shadow: 0 0 0 3px var(--color-primary-soft), var(--shadow-sm); }
-.product-media { align-items: flex-end; background: oklch(0.91 0.045 170); display: flex; height: 230px; justify-content: center; overflow: hidden; padding-bottom: 19px; position: relative; }
+.product-media { align-items: flex-end; background-position: center; background-size: cover; display: flex; height: 230px; justify-content: center; overflow: hidden; padding-bottom: 19px; position: relative; }
+.product-media.has-image::before { display: none; }
 .product-media::before { background: oklch(0.48 0.11 170); border-radius: 18px 18px 30px 30px; bottom: 22px; content: ""; height: 154px; position: absolute; width: 125px; }
 .product-media.pink { background: oklch(0.93 0.045 25); }
 .product-media.pink::before { background: oklch(0.68 0.12 25); }
