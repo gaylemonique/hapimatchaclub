@@ -24,7 +24,7 @@ async function checkRoute(path, expected) {
   if (!passed) throw new Error(`${path} did not contain expected content: ${expected}`);
 }
 
-for (const [path, expected] of [["/", "Hapi Matcha Club"], ["/menu", "Hapi Matcha Latte"], ["/about", "The Hapi feeling"], ["/order", "Order your hapi."], ["/admin", "Hapi admin"], ["/robots.txt", "sitemap"], ["/sitemap.xml", "/menu"]]) {
+for (const [path, expected] of [["/", "Hapi Matcha Club"], ["/menu", "Hapi Matcha Latte"], ["/about", "The Hapi feeling"], ["/order", "Order your hapi."], ["/admin", "Hapi admin"], ["/robots.txt", "sitemap"], ["/sitemap.xml", "/menu"], ["/api/health", '"ok":true']]) {
   await checkRoute(path, expected);
 }
 
