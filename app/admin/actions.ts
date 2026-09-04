@@ -25,6 +25,24 @@ export async function signInAdmin(_previousState: { error: string }, formData: F
   redirect("/admin");
 }
 
+export async function completeAdminInvite(formData: FormData) {
+  const accessToken = String(formData.get("accessToken") ?? "");
+  const refreshToken = String(formData.get("refreshToken") ?? "");
+  if (!accessToken || !refreshToken) redirect("/admin");
+
+  const { client } = await requireAdmin();
+  const { error } = await client.auth.setSession({ access_token: accessToken, refresh_token: refreshToken });
+  if (error) redirect("/admin");
+
+  const { data: { user } } = await client.auth.getUser();
+  if (user?.app_metadata?.role !== "admin") {
+    await client.auth.signOut();
+    redirect("/admin");
+  }
+
+  redirect("/admin");
+}
+
 export async function signOutAdmin() {
   const { client } = await requireAdmin();
   await client.auth.signOut();
