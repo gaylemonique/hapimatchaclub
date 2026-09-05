@@ -9,6 +9,7 @@ import {
   INSTAGRAM_URL,
   ORDER_POLICY,
   ORDER_URL,
+  PRICE_NOTE,
   PHONE,
   PHONE_TEL,
 } from "@/lib/menu";
@@ -72,7 +73,7 @@ export default function OrderPage() {
         </section>
 
         <p className="notice">
-          {DELIVERY_NOTE} {ORDER_POLICY}
+          {PRICE_NOTE} {DELIVERY_NOTE} {ORDER_POLICY}
         </p>
 
         <section className="hours-card">

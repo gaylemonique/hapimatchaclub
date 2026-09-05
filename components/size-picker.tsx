@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { DELIVERY_NOTE, DIRECT_ORDER_URL, ORDER_URL, peso, type Size } from "@/lib/menu";
+import { DELIVERY_NOTE, DIRECT_ORDER_URL, ORDER_URL, peso, PRICE_NOTE, type Size } from "@/lib/menu";
 
 /**
  * Size choice plus the order call to action. Ordering happens off-site, so the
@@ -37,6 +37,8 @@ export function SizePicker({ sizes }: { sizes: Size[] }) {
         <span className="price-now">{peso(size.price)}</span>
         {sizes.length === 1 && <span className="card-size">{size.label}</span>}
       </div>
+
+      <p className="notice">{PRICE_NOTE}</p>
 
       <div className="order-bar">
         <a
