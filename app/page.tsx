@@ -1,8 +1,109 @@
+import Image from "next/image";
 import Link from "next/link";
-import { ProductCard } from "@/components/product-card";
-import { SiteHeader } from "@/components/site-header";
-import { featuredProducts } from "@/lib/menu";
+import { ProductCardTall } from "@/components/product-card";
+import { SiteFooter } from "@/components/site-footer";
+import { categoryTiles, favorites, totalItems } from "@/lib/menu";
 
 export default function Home() {
-  return <><SiteHeader /><main><section className="hero"><div className="hero-grid"><div><p className="eyebrow">Japanese matcha · hojicha · good food</p><h1>A little matcha.<br /><em>A lot of hapi.</em></h1><p className="hero-copy">Slow mornings, bright afternoons, and drinks worth coming back for. Find your next favorite on the Hapi menu.</p><div className="hero-actions"><Link className="button-primary" href="/menu">View menu</Link><Link className="button-secondary" href="/order">Order now</Link></div></div><div aria-label="Illustrated matcha drink placeholder" className="hero-art" role="img"><div className="cup" /><span className="art-label">made for good moods</span></div></div></section><section className="section"><div className="section-heading"><h2>Hapi favorites</h2><Link className="section-link" href="/menu">See full menu →</Link></div><div className="product-grid">{featuredProducts.map((product) => <ProductCard key={product.name} product={product} />)}</div></section><section className="story"><div className="story-inner"><h2>Good ingredients.<br />Better energy.</h2><p>Matcha and hojicha are the starting point, not the whole story. Hapi is a place for thoughtful drinks, good food, and a little lift in the middle of your day.</p></div></section></main><footer className="site-footer"><Link className="brand" href="/"><span className="brand-mark">H</span><span>Hapi Matcha Club</span></Link><small>Official menu and ordering links coming together here.</small></footer></>;
+  return (
+    <>
+      <section className="hero">
+        <div className="hero-media">
+          <Image
+            alt="A Hapi matcha latte held in one hand"
+            fetchPriority="high"
+            fill
+            loading="eager"
+            quality={90}
+            sizes="(min-width: 1080px) 50vw, 100vw"
+            src="/img/p-hapi-cup.png"
+          />
+          <span className="hours-pill hours-pill-mobile">TODAY · 10AM–10PM</span>
+          <span className="hours-pill hours-pill-desktop">HAPI MATCHA LATTE · ₱165</span>
+        </div>
+
+        <div className="hero-card">
+          <p className="eyebrow">Japanese matcha · hojicha · coffee · good food</p>
+          <h1>
+            A little matcha.
+            <br />
+            A lot of hapi.
+          </h1>
+          <p>
+            Whisked to order in a home cafe in Marikina. Uji matcha, roasted hojicha, and food worth the
+            trip.
+          </p>
+          <div className="hero-actions">
+            <Link className="btn btn-ink" href="/menu">
+              View menu
+            </Link>
+            <Link className="btn btn-outline" href="/order">
+              Order now
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="section-head">
+          <h2>Hapi favorites</h2>
+          <Link className="btn-link" href="/menu">
+            All {totalItems} →
+          </Link>
+        </div>
+        <div className="rail">
+          {favorites.map((product) => (
+            <ProductCardTall key={product.id} product={product} />
+          ))}
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="section-head">
+          <h2>Browse by</h2>
+        </div>
+        <div className="tiles">
+          {categoryTiles.map((tile) => (
+            <Link className="tile" href={`/menu?cat=${encodeURIComponent(tile.cat)}`} key={tile.cat}>
+              <Image alt="" fill quality={90} sizes="(min-width: 768px) 25vw, 50vw" src={tile.img} />
+              <span className="tile-scrim" />
+              <span className="tile-label">{tile.label}</span>
+              <span className="tile-count">{tile.count} ITEMS</span>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      <div className="bands">
+        <section className="band band-sage">
+          <p className="eyebrow">Our matcha</p>
+          <h2>
+            Uji-sourced.
+            <br />
+            Whisked, never shaken.
+          </h2>
+          <p>
+            Small-lot ceremonial matcha from Uji, low-volume production, and a roasted hojicha we picked
+            for how it behaves with milk.
+          </p>
+          <Link className="btn btn-on-dark" href="/about">
+            Read our story
+          </Link>
+        </section>
+
+        <section className="band band-ink">
+          <div>
+            <h2>Ready when you are.</h2>
+            <p>Order direct or on foodpanda — delivery or pickup.</p>
+            <Link className="btn btn-primary" href="/order">
+              Order now
+            </Link>
+          </div>
+          <Image alt="" height={160} quality={90} src="/img/p-logo-orange.png" width={130} />
+        </section>
+      </div>
+
+      <SiteFooter />
+    </>
+  );
 }

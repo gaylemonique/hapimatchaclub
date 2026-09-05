@@ -1,5 +1,42 @@
+"use client";
+
+import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+
+// "Order" is intentionally absent — the accent pill beside this nav already leads there.
+const links = [
+  { href: "/menu", label: "Menu" },
+  { href: "/about", label: "About" },
+];
 
 export function SiteHeader() {
-  return <header className="site-header"><Link className="brand" href="/"><span className="brand-mark">H</span><span>Hapi Matcha Club</span></Link><nav aria-label="Primary navigation" className="nav"><Link href="/">Home</Link><Link href="/menu">Menu</Link><Link href="/about">About</Link><Link className="nav-cta" href="/order">Order now</Link></nav></header>;
+  const pathname = usePathname();
+
+  return (
+    <header className="site-header">
+      <Link className="brand" href="/">
+        <Image alt="" className="brand-mark" height={40} loading="eager" quality={90} src="/img/p-logo-avatar.png" width={40} />
+        <span>
+          <span className="brand-name">hapi matcha club</span>
+          <span className="brand-sub">Marikina · home cafe</span>
+        </span>
+      </Link>
+      <span className="spacer" />
+      <nav aria-label="Primary" className="site-nav">
+        {links.map((link) => (
+          <Link
+            aria-current={pathname.startsWith(link.href) ? "page" : undefined}
+            href={link.href}
+            key={link.href}
+          >
+            {link.label}
+          </Link>
+        ))}
+      </nav>
+      <Link className="btn btn-primary header-cta" href="/order">
+        Order
+      </Link>
+    </header>
+  );
 }
