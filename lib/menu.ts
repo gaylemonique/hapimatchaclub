@@ -8,7 +8,8 @@ export type Size = {
   /** Shown on the size control — "Regular", "Large", "24 oz". */
   label: string;
   price: number;
-  /** Pre-discount price, when the item is currently reduced. */
+  /** `original_price` from the catalog. Carried but not displayed — the site
+   *  shows the current price only. */
   was?: number;
 };
 
@@ -231,6 +232,8 @@ export const TAGLINE =
   "A home-based matcha bar in Marikina serving handcrafted matcha drinks to make everyday hapi.";
 export const AVAILABILITY = "Available for pick-up, deliveries, and events.";
 export const ADDRESS = "Vista Valley Covered Court, Sto. Niño, Marikina";
+export const DELIVERY_NOTE =
+  "For deliveries, shipping fees and prices may vary depending on your location.";
 
 // External ordering channels. Ordering always leaves the site — no checkout lives here.
 export const ORDER_URL = "https://www.foodpanda.ph/restaurant/rgsp/hapi-matcha-club-marikina";
@@ -242,12 +245,6 @@ export const peso = (n: number) => `₱${n}`;
 export const priceLabel = (p: Product) => {
   const prices = p.sizes.map((s) => s.price);
   return prices.length > 1 ? `${peso(prices[0])} / ${peso(prices[prices.length - 1])}` : peso(prices[0]);
-};
-
-/** The pre-discount price, when the first size is currently reduced. */
-export const wasLabel = (p: Product) => {
-  const first = p.sizes[0];
-  return first?.was && first.was > first.price ? peso(first.was) : null;
 };
 
 export const sizeLabel = (p: Product) => p.sizes.map((s) => s.label).join(" · ");

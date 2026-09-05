@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { DIRECT_ORDER_URL, ORDER_URL, peso, type Size } from "@/lib/menu";
+import { DELIVERY_NOTE, DIRECT_ORDER_URL, ORDER_URL, peso, type Size } from "@/lib/menu";
 
 /**
  * Size choice plus the order call to action. Ordering happens off-site, so the
@@ -35,14 +35,6 @@ export function SizePicker({ sizes }: { sizes: Size[] }) {
 
       <div className="price-block">
         <span className="price-now">{peso(size.price)}</span>
-        {size.was && size.was > size.price && (
-          <>
-            <s className="price-was">{peso(size.was)}</s>
-            <span className="tag tag-seasonal">
-              {Math.round((1 - size.price / size.was) * 100)}% OFF
-            </span>
-          </>
-        )}
         {sizes.length === 1 && <span className="card-size">{size.label}</span>}
       </div>
 
@@ -63,6 +55,7 @@ export function SizePicker({ sizes }: { sizes: Size[] }) {
         >
           or order on foodpanda ↗
         </a>
+        <p className="notice notice-center">{DELIVERY_NOTE}</p>
       </div>
     </>
   );
