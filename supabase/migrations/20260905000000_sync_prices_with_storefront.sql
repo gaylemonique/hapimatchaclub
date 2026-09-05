@@ -1,120 +1,125 @@
 -- Sync the catalog with Hapi's own ordering storefront (magic.mise-group.com),
 -- read on 2026-09-05. Every price in the previous seed disagreed with the
--- storefront: those looked like a 20%-off snapshot, while the storefront is what
+-- storefront: those read as a 20%-off snapshot, while the storefront is what
 -- customers are charged today.
 --
--- Scope of this migration:
---   1. Prices updated to the storefront's, and the stale original_price cleared
---   2. Descriptions replaced where the storefront has better copy
---   3. Products the storefront sells but the catalog lacks, inserted
---   4. Products the catalog has but the storefront does not, only listed in a
---      comment at the end — deactivating them is a judgement call for staff
+-- Written as plain statements on purpose -- one UPDATE or INSERT per item, no
+-- CTEs and no multi-table joins -- so that a failure names the exact line and
+-- anything can be re-run on its own.
 --
--- Prices exclude drink customization; the storefront prices every drink from a
--- base with paid options on top.
+-- Prices are the base price. The storefront sells every drink with paid options
+-- on top, which is why the site says prices vary by drink customization.
 
 begin;
 
--- 1 ────────────────────────────────────────────────────────── prices
--- original_price is set to null: the values it held implied a discount that no
+-- ---------------------------------------------------------------- prices
+-- original_price is cleared: the values it held implied a discount that no
 -- longer matches anything the storefront shows.
 
-with storefront(slug, price) as (values
-  ('hapi-matcha-latte', 190),
-  ('spring-garden-matcha-latte', 200),
-  ('strawberry-matcha-latte', 220),
-  ('mango-matcha-latte', 220),
-  ('blueming-matcha-latte', 240),
-  ('salted-cream-matcha-latte', 220),
-  ('girlfriend-matcha-latte', 270),
-  ('hapi-hojicha-latte', 180),
-  ('tablea-hojicha-latte', 230),
-  ('salted-cream-hojicha-latte', 210),
-  ('peanut-butter-banana-hojicha-latte', 240),
-  ('campfire-cookie-butter-hojicha-latte', 280),
-  ('fresh-lemonade', 150),
-  ('strawberry-milk', 180),
-  ('chocolate-milk', 180),
-  ('spanish-latte', 170),
-  ('iced-americano', 160),
-  ('strawberry-lemonade', 170),
-  ('green-apple-soda', 160),
-  ('strawberry-soda', 150),
-  ('blueberry-soda', 150),
-  ('banana-crumble-croffle', 160),
-  ('biscoff-croffle', 180),
-  ('classic-cheesy-eggdrop-sandwich', 170),
-  ('chicken-eggdrop-sandwich', 230),
-  ('salted-cream-latte', 200),
-  ('vietnamese-inspired-egg-foam-cafe-latte', 240)
-)
-update public.product_variants v
-set price = s.price,
-    original_price = null
-from storefront s
-join public.products p on p.slug = s.slug
-where v.product_id = p.id;
+update public.product_variants set price = 190, original_price = null where product_id = (select id from public.products where slug = 'hapi-matcha-latte');
+update public.product_variants set price = 200, original_price = null where product_id = (select id from public.products where slug = 'spring-garden-matcha-latte');
+update public.product_variants set price = 220, original_price = null where product_id = (select id from public.products where slug = 'strawberry-matcha-latte');
+update public.product_variants set price = 220, original_price = null where product_id = (select id from public.products where slug = 'mango-matcha-latte');
+update public.product_variants set price = 240, original_price = null where product_id = (select id from public.products where slug = 'blueming-matcha-latte');
+update public.product_variants set price = 220, original_price = null where product_id = (select id from public.products where slug = 'salted-cream-matcha-latte');
+update public.product_variants set price = 270, original_price = null where product_id = (select id from public.products where slug = 'girlfriend-matcha-latte');
+update public.product_variants set price = 180, original_price = null where product_id = (select id from public.products where slug = 'hapi-hojicha-latte');
+update public.product_variants set price = 230, original_price = null where product_id = (select id from public.products where slug = 'tablea-hojicha-latte');
+update public.product_variants set price = 210, original_price = null where product_id = (select id from public.products where slug = 'salted-cream-hojicha-latte');
+update public.product_variants set price = 240, original_price = null where product_id = (select id from public.products where slug = 'peanut-butter-banana-hojicha-latte');
+update public.product_variants set price = 280, original_price = null where product_id = (select id from public.products where slug = 'campfire-cookie-butter-hojicha-latte');
+update public.product_variants set price = 150, original_price = null where product_id = (select id from public.products where slug = 'fresh-lemonade');
+update public.product_variants set price = 180, original_price = null where product_id = (select id from public.products where slug = 'strawberry-milk');
+update public.product_variants set price = 180, original_price = null where product_id = (select id from public.products where slug = 'chocolate-milk');
+update public.product_variants set price = 170, original_price = null where product_id = (select id from public.products where slug = 'spanish-latte');
+update public.product_variants set price = 160, original_price = null where product_id = (select id from public.products where slug = 'iced-americano');
+update public.product_variants set price = 170, original_price = null where product_id = (select id from public.products where slug = 'strawberry-lemonade');
+update public.product_variants set price = 160, original_price = null where product_id = (select id from public.products where slug = 'green-apple-soda');
+update public.product_variants set price = 150, original_price = null where product_id = (select id from public.products where slug = 'strawberry-soda');
+update public.product_variants set price = 150, original_price = null where product_id = (select id from public.products where slug = 'blueberry-soda');
+update public.product_variants set price = 160, original_price = null where product_id = (select id from public.products where slug = 'banana-crumble-croffle');
+update public.product_variants set price = 180, original_price = null where product_id = (select id from public.products where slug = 'biscoff-croffle');
+update public.product_variants set price = 170, original_price = null where product_id = (select id from public.products where slug = 'classic-cheesy-eggdrop-sandwich');
+update public.product_variants set price = 230, original_price = null where product_id = (select id from public.products where slug = 'chicken-eggdrop-sandwich');
+update public.product_variants set price = 200, original_price = null where product_id = (select id from public.products where slug = 'salted-cream-latte');
+update public.product_variants set price = 240, original_price = null where product_id = (select id from public.products where slug = 'vietnamese-inspired-egg-foam-cafe-latte');
 
--- 2 ──────────────────────────────────────────────────── descriptions
--- Verbatim from the storefront, which writes these far better than the seed did.
+-- ---------------------------------------------------------- descriptions
+-- Verbatim from the storefront, which writes these better than the seed did.
 
-with copy(slug, description) as (values
-  ('hapi-matcha-latte', 'Classic matcha by hapi. Sweetened with agave.'),
-  ('spring-garden-matcha-latte', 'Like a peaceful stroll through a blooming garden. Floral loose-leaf tea meets creamy oat milk and matcha for a delicate, comforting cup. Freshly steeped, so it may take a few extra minutes.'),
-  ('strawberry-matcha-latte', 'Made with our homemade strawberry puree. Fruity, creamy, and guaranteed to make your day hapi-er.'),
-  ('mango-matcha-latte', 'A tropical escape in a cup. Made with homemade mango purée, it pairs well with matcha for a bright, refreshing treat.'),
-  ('blueming-matcha-latte', 'A dreamy blend of matcha, blue ternate flower, and collagen. Beautiful, refreshing, and made for your glow-up era.'),
-  ('salted-cream-matcha-latte', 'A crowd favorite for a reason. Earthy matcha topped with our velvety salted cream for the perfect balance of sweet and creamy.'),
-  ('hapi-hojicha-latte', 'Roasted, nutty, and comforting. If matcha feels too bold, hojicha is its cozy cousin — smooth, mellow, and easy to love.'),
-  ('tablea-hojicha-latte', 'Crafted with our family-grown tablea and roasted hojicha. Chocolatey, nutty, and deeply comforting. Note: tablea is naturally rich in antioxidants and may have mild laxative effects. Contains dairy.'),
-  ('salted-cream-hojicha-latte', 'Just like its matcha counterpart, this latte is the perfect blend of hojicha and salted cream.'),
-  ('peanut-butter-banana-hojicha-latte', 'A comforting fusion of roasted hojicha, creamy peanut butter, and banana. Smooth, nutty, and naturally sweet — perfect for slow mornings and cozy afternoons.')
-)
-update public.products p
-set description = c.description
-from copy c
-where p.slug = c.slug;
+update public.products set description = 'Classic matcha by hapi. Sweetened with agave.' where slug = 'hapi-matcha-latte';
+update public.products set description = 'Like a peaceful stroll through a blooming garden. Floral loose-leaf tea meets creamy oat milk and matcha for a delicate, comforting cup. Freshly steeped, so it may take a few extra minutes.' where slug = 'spring-garden-matcha-latte';
+update public.products set description = 'Made with our homemade strawberry puree. Fruity, creamy, and guaranteed to make your day hapi-er.' where slug = 'strawberry-matcha-latte';
+update public.products set description = 'A tropical escape in a cup. Made with homemade mango puree, it pairs well with matcha for a bright, refreshing treat.' where slug = 'mango-matcha-latte';
+update public.products set description = 'A dreamy blend of matcha, blue ternate flower, and collagen. Beautiful, refreshing, and made for your glow-up era.' where slug = 'blueming-matcha-latte';
+update public.products set description = 'A crowd favorite for a reason. Earthy matcha topped with our velvety salted cream for the perfect balance of sweet and creamy.' where slug = 'salted-cream-matcha-latte';
+update public.products set description = 'Roasted, nutty, and comforting. If matcha feels too bold, hojicha is its cozy cousin: smooth, mellow, and easy to love.' where slug = 'hapi-hojicha-latte';
+update public.products set description = 'Crafted with our family-grown tablea and roasted hojicha. Chocolatey, nutty, and deeply comforting. Note: tablea is naturally rich in antioxidants and may have mild laxative effects. Contains dairy.' where slug = 'tablea-hojicha-latte';
+update public.products set description = 'Just like its matcha counterpart, this latte is the perfect blend of hojicha and salted cream.' where slug = 'salted-cream-hojicha-latte';
+update public.products set description = 'A comforting fusion of roasted hojicha, creamy peanut butter, and banana. Smooth, nutty, and naturally sweet, perfect for slow mornings and cozy afternoons.' where slug = 'peanut-butter-banana-hojicha-latte';
 
--- 3 ────────────────────────────────────────── products only on the storefront
--- Categories are assigned by name; adjust if staff would file them elsewhere.
+-- ------------------------------------------ products only on the storefront
+-- Categories assigned by name; move them if staff would file them elsewhere.
 
 insert into public.products (category_id, name, slug, description, featured, display_order)
-select c.id, v.name, v.slug, v.description, v.featured, v.display_order
-from (values
-  ('special-matcha', 'Rose Lemonade Matcha', 'rose-lemonade-matcha', 'Floral, citrusy, and refreshing. Delicate rose meets bright lemonade and smooth matcha for a drink that tastes like sunshine in a cup.', false, 2),
-  ('special-matcha', 'Lemon Curd Creamy Matcha Latte', 'lemon-curd-creamy-matcha-latte', 'Bright lemon curd folded into a creamy matcha latte.', false, 3),
-  ('coffee-and-non-matcha-drinks', 'Classic Cafe Latte 14oz', 'classic-cafe-latte', 'A classic iced cafe latte.', false, 13),
-  ('coffee-and-non-matcha-drinks', 'Yakult Lemonade 16oz', 'yakult-lemonade', 'Yakult and fresh lemonade over ice.', false, 14),
-  ('snacks-and-appetizers', 'Breakfast Croffle', 'breakfast-croffle', 'A croffle to start the day.', false, 8),
-  ('snacks-and-appetizers', 'Spam Eggdrop Sandwich', 'spam-eggdrop-sandwich', 'Eggdrop sandwich with spam.', false, 9)
-) as v(category_slug, name, slug, description, featured, display_order)
-join public.categories c on c.slug = v.category_slug
-on conflict (slug) do update set
-  name = excluded.name,
-  description = excluded.description,
-  category_id = excluded.category_id,
-  display_order = excluded.display_order,
-  is_available = true;
+select id, 'Rose Lemonade Matcha', 'rose-lemonade-matcha', 'Floral, citrusy, and refreshing. Delicate rose meets bright lemonade and smooth matcha for a drink that tastes like sunshine in a cup.', false, 2
+from public.categories where slug = 'special-matcha'
+on conflict (slug) do update set name = excluded.name, description = excluded.description, category_id = excluded.category_id, is_available = true;
+
+insert into public.products (category_id, name, slug, description, featured, display_order)
+select id, 'Lemon Curd Creamy Matcha Latte', 'lemon-curd-creamy-matcha-latte', 'Bright lemon curd folded into a creamy matcha latte.', false, 3
+from public.categories where slug = 'special-matcha'
+on conflict (slug) do update set name = excluded.name, description = excluded.description, category_id = excluded.category_id, is_available = true;
+
+insert into public.products (category_id, name, slug, description, featured, display_order)
+select id, 'Classic Cafe Latte 14oz', 'classic-cafe-latte', 'A classic iced cafe latte.', false, 13
+from public.categories where slug = 'coffee-and-non-matcha-drinks'
+on conflict (slug) do update set name = excluded.name, description = excluded.description, category_id = excluded.category_id, is_available = true;
+
+insert into public.products (category_id, name, slug, description, featured, display_order)
+select id, 'Yakult Lemonade 16oz', 'yakult-lemonade', 'Yakult and fresh lemonade over ice.', false, 14
+from public.categories where slug = 'coffee-and-non-matcha-drinks'
+on conflict (slug) do update set name = excluded.name, description = excluded.description, category_id = excluded.category_id, is_available = true;
+
+insert into public.products (category_id, name, slug, description, featured, display_order)
+select id, 'Breakfast Croffle', 'breakfast-croffle', 'A croffle to start the day.', false, 8
+from public.categories where slug = 'snacks-and-appetizers'
+on conflict (slug) do update set name = excluded.name, description = excluded.description, category_id = excluded.category_id, is_available = true;
+
+insert into public.products (category_id, name, slug, description, featured, display_order)
+select id, 'Spam Eggdrop Sandwich', 'spam-eggdrop-sandwich', 'Eggdrop sandwich with spam.', false, 9
+from public.categories where slug = 'snacks-and-appetizers'
+on conflict (slug) do update set name = excluded.name, description = excluded.description, category_id = excluded.category_id, is_available = true;
+
+-- Their prices.
 
 insert into public.product_variants (product_id, name, size, price, original_price, display_order)
-select p.id, prices.name, prices.size, prices.price, null, 1
-from (values
-  ('rose-lemonade-matcha', 'Regular', 'Single size', 215),
-  ('lemon-curd-creamy-matcha-latte', 'Regular', 'Single size', 220),
-  ('classic-cafe-latte', '14 oz', '14 oz', 170),
-  ('yakult-lemonade', '16 oz', '16 oz', 150),
-  ('breakfast-croffle', 'Regular', 'Single size', 180),
-  ('spam-eggdrop-sandwich', 'Regular', 'Single size', 210)
-) as prices(slug, name, size, price)
-join public.products p on p.slug = prices.slug
-on conflict (product_id, size, name) do update set
-  price = excluded.price,
-  original_price = null,
-  is_available = true;
+select id, 'Regular', 'Single size', 215, null, 1 from public.products where slug = 'rose-lemonade-matcha'
+on conflict (product_id, size, name) do update set price = excluded.price, original_price = null, is_available = true;
+
+insert into public.product_variants (product_id, name, size, price, original_price, display_order)
+select id, 'Regular', 'Single size', 220, null, 1 from public.products where slug = 'lemon-curd-creamy-matcha-latte'
+on conflict (product_id, size, name) do update set price = excluded.price, original_price = null, is_available = true;
+
+insert into public.product_variants (product_id, name, size, price, original_price, display_order)
+select id, '14 oz', '14 oz', 170, null, 1 from public.products where slug = 'classic-cafe-latte'
+on conflict (product_id, size, name) do update set price = excluded.price, original_price = null, is_available = true;
+
+insert into public.product_variants (product_id, name, size, price, original_price, display_order)
+select id, '16 oz', '16 oz', 150, null, 1 from public.products where slug = 'yakult-lemonade'
+on conflict (product_id, size, name) do update set price = excluded.price, original_price = null, is_available = true;
+
+insert into public.product_variants (product_id, name, size, price, original_price, display_order)
+select id, 'Regular', 'Single size', 180, null, 1 from public.products where slug = 'breakfast-croffle'
+on conflict (product_id, size, name) do update set price = excluded.price, original_price = null, is_available = true;
+
+insert into public.product_variants (product_id, name, size, price, original_price, display_order)
+select id, 'Regular', 'Single size', 210, null, 1 from public.products where slug = 'spam-eggdrop-sandwich'
+on conflict (product_id, size, name) do update set price = excluded.price, original_price = null, is_available = true;
 
 commit;
 
--- 4 ─────────────────────────────────────────────── for staff to confirm
+-- ------------------------------------------------- for staff to confirm
 --
 -- In the catalog but NOT on the storefront as of 2026-09-05. Left untouched
 -- rather than deactivated, since they may simply be off the online menu:
@@ -122,12 +127,9 @@ commit;
 --   spam-musubi-and-lemonade, breakfast-croffle-and-hapi-matcha-latte
 --
 -- Name mismatches worth resolving:
---   banana-crumble-croffle  — the storefront calls this "Banana Croffle"
---   vietnamese-inspired-egg-foam-cafe-latte — the storefront calls this
---     "Vietnamese-Inspired Egg Foam Matcha Latte", and separately lists
---     "Vietnamese-Inspired Egg Foam Matcha" at 250, which may be a second
---     product or a size of the same one. Not inserted, because guessing wrong
---     would put a duplicate on the public menu.
---
--- Also on the storefront, not modelled here: per-drink paid options, which are
--- why prices vary by customization.
+--   banana-crumble-croffle is "Banana Croffle" on the storefront.
+--   vietnamese-inspired-egg-foam-cafe-latte is "Vietnamese-Inspired Egg Foam
+--   Matcha Latte" there, and a separate "Vietnamese-Inspired Egg Foam Matcha"
+--   is listed at 250. That may be a second product or a size of the same one,
+--   so it is not inserted here: guessing wrong would put a duplicate on the
+--   public menu.
