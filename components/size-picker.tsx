@@ -57,7 +57,9 @@ export function SizePicker({ sizes }: { sizes: Size[] }) {
         >
           or order on foodpanda ↗
         </a>
-        <p className="notice notice-center">{DELIVERY_NOTE}</p>
+        <p className="notice notice-center">
+          Opens Hapi&apos;s ordering page, where you can pick this drink. {DELIVERY_NOTE}
+        </p>
       </div>
     </>
   );
