@@ -78,6 +78,10 @@ stretch, doubling again on a high-DPI screen.
 **Replacing these with originals of 1080px or wider on the short edge is the single biggest visual
 upgrade available to the site.** Ideally 4:5 portrait, which is the crop every surface here uses.
 
+Coverage is also thin: **15 of the 33 products have a photograph**; the other 18 render the
+`PHOTO NEEDED` slot. The catalog is the full seeded menu, so several items the canvas never
+illustrated (sodas, croffles, the milk drinks) have no shot at all.
+
 ## Motion
 
 Two kinds only — entrances that play once as content arrives, and feedback on hover or press.

@@ -2,9 +2,9 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { Tag } from "@/components/product-card";
+import { FaveTag } from "@/components/product-card";
 import { SizePicker } from "@/components/size-picker";
-import { addons, allProducts, peso, productById } from "@/lib/menu";
+import { allProducts, productById } from "@/lib/menu";
 
 type Params = { params: Promise<{ id: string }> };
 
@@ -48,35 +48,18 @@ export default async function ProductPage({ params }: Params) {
         </Link>
       </div>
 
+      {/* No "what’s in it" or add-ons panel: the catalog carries a single
+          description per product, and the seed records add-ons as unconfirmed. */}
       <div className="product-sheet">
         <div className="product-tags">
-          {product.tag && <Tag kind={product.tag} />}
-          {product.soldOut && <Tag kind="SOLD OUT">SOLD OUT TODAY</Tag>}
+          {product.featured && <FaveTag />}
           <span className="tag tag-cat">{product.cat.toUpperCase()}</span>
         </div>
 
         <h1>{product.name}</h1>
         <p className="product-desc">{product.desc}</p>
 
-        <SizePicker sizes={product.sizes} soldOut={product.soldOut}>
-          <section className="panel">
-            <h2 className="eyebrow">What&apos;s in it</h2>
-            <p>{product.notes}</p>
-          </section>
-
-          <section className="panel">
-            <div className="panel-head">
-              <h2 className="eyebrow">Add-ons</h2>
-              <span className="meta">TO CONFIRM</span>
-            </div>
-            {addons.map((addon) => (
-              <div className="addon-row" key={addon.name}>
-                <span>{addon.name}</span>
-                <b>{peso(addon.price)}</b>
-              </div>
-            ))}
-          </section>
-        </SizePicker>
+        <SizePicker sizes={product.sizes} />
       </div>
     </article>
   );

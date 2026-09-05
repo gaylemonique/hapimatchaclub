@@ -5,55 +5,55 @@ import { DIRECT_ORDER_URL, ORDER_URL, peso, type Size } from "@/lib/menu";
 
 /**
  * Size choice plus the order call to action. Ordering happens off-site, so the
- * button is a link out rather than anything resembling a checkout.
+ * buttons are links out rather than anything resembling a checkout.
  */
-export function SizePicker({
-  children,
-  sizes,
-  soldOut,
-}: {
-  /** Detail panels, rendered between the size choice and the sticky order bar. */
-  children?: React.ReactNode;
-  sizes: Size[];
-  soldOut?: boolean;
-}) {
+export function SizePicker({ sizes }: { sizes: Size[] }) {
   const [active, setActive] = useState(0);
-  const price = peso(sizes[active].price);
+  const size = sizes[active];
 
   return (
     <>
-      <h2 className="eyebrow">Size</h2>
-      <div className="size-options">
-        {sizes.map((size, index) => (
-          <button
-            aria-pressed={index === active}
-            className="size-option"
-            key={size.label}
-            onClick={() => setActive(index)}
-            type="button"
-          >
-            <span className="size-name">{size.label}</span>
-            <span className="size-price">{peso(size.price)}</span>
-          </button>
-        ))}
+      {sizes.length > 1 && (
+        <>
+          <h2 className="eyebrow">Size</h2>
+          <div className="size-options">
+            {sizes.map((option, index) => (
+              <button
+                aria-pressed={index === active}
+                className="size-option"
+                key={option.label}
+                onClick={() => setActive(index)}
+                type="button"
+              >
+                <span className="size-name">{option.label}</span>
+                <span className="size-price">{peso(option.price)}</span>
+              </button>
+            ))}
+          </div>
+        </>
+      )}
+
+      <div className="price-block">
+        <span className="price-now">{peso(size.price)}</span>
+        {size.was && size.was > size.price && (
+          <>
+            <s className="price-was">{peso(size.was)}</s>
+            <span className="tag tag-seasonal">
+              {Math.round((1 - size.price / size.was) * 100)}% OFF
+            </span>
+          </>
+        )}
+        {sizes.length === 1 && <span className="card-size">{size.label}</span>}
       </div>
 
-      {children}
-
       <div className="order-bar">
-        {soldOut ? (
-          <p className="soldout-note">
-            Sold out today. Check the ordering pages or message us — it usually comes back the next
-            service day.
-          </p>
-        ) : null}
         <a
           className="btn btn-primary btn-block"
           href={DIRECT_ORDER_URL}
           rel="noopener noreferrer"
           target="_blank"
         >
-          Order direct · {price}
+          Order direct · {peso(size.price)}
         </a>
         <a
           className="btn btn-quiet btn-block"

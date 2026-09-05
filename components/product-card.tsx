@@ -1,19 +1,24 @@
 import Image from "next/image";
 import Link from "next/link";
-import { priceLabel, sizeLabel, type Product } from "@/lib/menu";
+import { priceLabel, sizeLabel, wasLabel, type Product } from "@/lib/menu";
 
-const tagClass: Record<string, string> = {
-  BESTSELLER: "tag-bestseller",
-  NEW: "tag-new",
-  SEASONAL: "tag-seasonal",
-  SPECIAL: "tag-special",
-};
+/**
+ * Only two signals are carried, because only two exist in the seeded catalog:
+ * the `featured` flag, and a pre-discount price. The bestseller/seasonal/new
+ * tag styling stays in globals.css for when the catalog gains those fields.
+ */
+export function FaveTag({ float }: { float?: boolean }) {
+  return <span className={`tag tag-bestseller${float ? " tag-float" : ""}`}>HAPI FAVE</span>;
+}
 
-export function Tag({ children, float, kind }: { children?: string; float?: boolean; kind: string }) {
+/** Current price, with the pre-discount price struck through beside it. */
+export function Price({ product }: { product: Product }) {
+  const was = wasLabel(product);
   return (
-    <span className={`tag ${tagClass[kind] ?? "tag-soldout"}${float ? " tag-float" : ""}`}>
-      {children ?? kind}
-    </span>
+    <>
+      {priceLabel(product)}
+      {was && <s className="price-was">{was}</s>}
+    </>
   );
 }
 
@@ -35,12 +40,14 @@ export function ProductCardTall({ product }: { product: Product }) {
     <Link className="card-tall" href={`/menu/${product.id}`}>
       <div className="card-media">
         <Media product={product} sizes="(min-width: 1080px) 320px, (min-width: 768px) 33vw, 158px" />
-        {product.tag && <Tag float kind={product.tag} />}
+        {product.featured && <FaveTag float />}
       </div>
       <div className="card-body">
         <div className="card-name">{product.name}</div>
         <p className="card-desc">{product.desc}</p>
-        <div className="card-price">{priceLabel(product)}</div>
+        <div className="card-price">
+          <Price product={product} />
+        </div>
       </div>
     </Link>
   );
@@ -49,21 +56,22 @@ export function ProductCardTall({ product }: { product: Product }) {
 /** Row card — the scannable default on the menu. */
 export function ProductCardRow({ product }: { product: Product }) {
   return (
-    <Link className={`card-row${product.soldOut ? " card-soldout" : ""}`} href={`/menu/${product.id}`}>
+    <Link className="card-row" href={`/menu/${product.id}`}>
       <div className="card-media">
-        <Media product={product} sizes="96px" />
+        <Media product={product} sizes="104px" />
       </div>
       <div className="card-body">
-        {(product.tag || product.soldOut) && (
+        {product.featured && (
           <div className="card-tags">
-            {product.tag && <Tag kind={product.tag} />}
-            {product.soldOut && <Tag kind="SOLD OUT">SOLD OUT TODAY</Tag>}
+            <FaveTag />
           </div>
         )}
         <div className="card-name">{product.name}</div>
         <p className="card-desc">{product.desc}</p>
         <div className="card-meta">
-          <span className="card-price">{priceLabel(product)}</span>
+          <span className="card-price">
+            <Price product={product} />
+          </span>
           <span className="card-size">{sizeLabel(product)}</span>
         </div>
       </div>
