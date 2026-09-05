@@ -1,14 +1,68 @@
+import Image from "next/image";
 import Link from "next/link";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { FaveTag } from "@/components/product-card";
+import { SizePicker } from "@/components/size-picker";
 import { SiteShell } from "@/components/site-shell";
-import { fallbackProducts, getPublicMenu, getPublicProduct } from "@/lib/menu";
+import { getMenu, getProduct } from "@/lib/menu";
 
-export async function generateStaticParams() { const { products } = await getPublicMenu(); return products.length ? products.map((product) => ({ slug: product.slug })) : fallbackProducts.map((product) => ({ slug: product.slug })); }
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) { const { slug } = await params; const product = await getPublicProduct(slug); return product ? { title: `${product.name} | Hapi Matcha Club`, description: product.description } : {}; }
+type Params = { params: Promise<{ slug: string }> };
 
-export default async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
+export async function generateStaticParams() {
+  const { products } = await getMenu();
+  return products.map((product) => ({ slug: product.slug }));
+}
+
+export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { slug } = await params;
-  const product = await getPublicProduct(slug);
+  const product = await getProduct(slug);
+  if (!product) return { title: "Not found | Hapi Matcha Club" };
+  return { title: `${product.name} | Hapi Matcha Club`, description: product.desc };
+}
+
+export default async function ProductPage({ params }: Params) {
+  const { slug } = await params;
+  const product = await getProduct(slug);
   if (!product) notFound();
-  return <SiteShell><main className="product-detail"><Link className="back-link" href="/menu">← Back to menu</Link><div className="detail-grid"><div aria-label={`${product.name} product image`} className={`detail-media product-media ${product.tone === "green" ? "" : product.tone} ${product.imageUrl ? "has-image" : ""}`} role="img" style={product.imageUrl ? { backgroundImage: `url(${product.imageUrl})` } : undefined}><span className="art-label">{product.imageUrl ? "" : "hapi"}</span></div><div className="detail-copy"><p className="eyebrow">{product.category}{product.tag ? ` · ${product.tag}` : ""}</p><h1>{product.name}</h1><p className="detail-description">{product.description}</p><p className="detail-notes">{product.flavorNotes}</p><h2>Choose your size</h2><ul className="variant-list">{product.variants.map((variant) => <li key={variant}>{variant}</li>)}</ul><Link className="button-primary" href="/order">Order this drink</Link></div></div></main></SiteShell>;
+
+  return (
+    <SiteShell>
+      <article className="product-detail">
+        <div className="product-media">
+          {product.img ? (
+            <Image
+              alt={product.name}
+              fetchPriority="high"
+              height={1000}
+              loading="eager"
+              quality={90}
+              sizes="(min-width: 1080px) 50vw, 100vw"
+              src={product.img}
+              width={800}
+            />
+          ) : (
+            <span aria-label={`Photo of ${product.name} not available yet`} className="photo-needed" role="img">
+              PHOTO NEEDED — 4:5 PRODUCT SHOT
+            </span>
+          )}
+          <Link aria-label="Back to menu" className="back-button" href="/menu">
+            ←
+          </Link>
+        </div>
+
+        <div className="product-sheet">
+          <div className="product-tags">
+            {product.featured && <FaveTag />}
+            <span className="tag tag-cat">{product.cat.toUpperCase()}</span>
+          </div>
+
+          <h1>{product.name}</h1>
+          <p className="product-desc">{product.desc}</p>
+
+          <SizePicker sizes={product.sizes} />
+        </div>
+      </article>
+    </SiteShell>
+  );
 }

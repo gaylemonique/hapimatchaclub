@@ -1,5 +1,89 @@
-import Link from "next/link";
+import Image from "next/image";
+import type { Metadata } from "next";
 import { SiteShell } from "@/components/site-shell";
-import { getPublicOrderingChannels } from "@/lib/menu";
+import { ADDRESS, DIRECT_ORDER_URL, HOURS, INSTAGRAM_URL, ORDER_URL } from "@/lib/menu";
 
-export default async function OrderPage() { const channels = await getPublicOrderingChannels(); return <SiteShell><main><section className="simple-page order-page"><p className="eyebrow">Ready when you are</p><h1>Order your hapi.</h1><p>Choose the official Hapi ordering channel that works best for you.</p>{channels.length ? <div className="order-list">{channels.map((channel) => <div key={channel.url}><h2>{channel.label}</h2><p>{channel.type === "delivery" ? "Order for delivery." : "Order through this official channel."}</p><a className="button-secondary" href={channel.url} rel="noreferrer" target="_blank">Order now</a></div>)}</div> : <div className="order-list"><div><h2>Ordering links coming soon</h2><p>Official Hapi ordering channels will appear here once confirmed.</p></div></div>}<Link className="button-secondary" href="/menu">Keep browsing the menu</Link></section></main></SiteShell>; }
+export const metadata: Metadata = {
+  title: "Order | Hapi Matcha Club",
+  description: "Order Hapi Matcha Club direct or through foodpanda. Same menu, same prices.",
+};
+
+export default function OrderPage() {
+  return (
+    <SiteShell>
+      <div className="page-intro">
+        <p className="eyebrow">Order</p>
+        <h1>One tap and it&apos;s on the way.</h1>
+        <p>
+          Two ways to order — straight from us, or through foodpanda. Same menu, same prices, and
+          we cater events.
+        </p>
+      </div>
+
+      <div className="order-body page">
+        <section className="channel-card channel-card-lead">
+          <div className="channel-head">
+            <Image alt="" className="channel-badge-img" height={46} quality={90} src="/img/p-logo-avatar.png" width={46} />
+            <div>
+              <p className="channel-name">Order direct</p>
+              <p className="channel-status">Straight from Hapi · delivery &amp; pickup</p>
+            </div>
+          </div>
+          <a
+            className="btn btn-primary btn-block"
+            href={DIRECT_ORDER_URL}
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Order direct ↗
+          </a>
+          <p className="disclaimer">OPENS HAPI&apos;S ORDERING PAGE · NO CHECKOUT ON THIS SITE</p>
+        </section>
+
+        <section className="channel-card">
+          <div className="channel-head">
+            <span aria-hidden="true" className="channel-badge">
+              fp
+            </span>
+            <div>
+              <p className="channel-name">foodpanda</p>
+              <p className="channel-status">Delivery &amp; pickup</p>
+            </div>
+          </div>
+          <a
+            className="btn btn-outline btn-block"
+            href={ORDER_URL}
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Order on foodpanda ↗
+          </a>
+          <p className="disclaimer">OPENS AN EXTERNAL APP · NO CHECKOUT ON THIS SITE</p>
+        </section>
+
+        <section className="hours-card">
+          <h2 className="eyebrow">Pickup from us</h2>
+          {HOURS.map((row) => (
+            <div className="hours-row" key={row.days}>
+              <span>{row.days}</span>
+              <span>{row.time}</span>
+            </div>
+          ))}
+          <p className="hours-note">{ADDRESS}</p>
+        </section>
+
+        <section className="contact-card">
+          <Image alt="" height={42} quality={90} src="/img/p-logo-avatar.png" width={42} />
+          <div className="contact-body">
+            <p className="contact-handle">@hapimatchaclub</p>
+            <p className="contact-note">Questions, custom orders, and events</p>
+          </div>
+          <a className="btn btn-outline" href={INSTAGRAM_URL} rel="noopener noreferrer" target="_blank">
+            Message
+          </a>
+        </section>
+      </div>
+
+    </SiteShell>
+  );
+}
