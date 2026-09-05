@@ -41,17 +41,24 @@ const size = (label: string, price: number, was?: number): Size => ({ label, pri
  * the catalog doesn't render as a wall of empty photo slots.
  */
 const fallbackImages: Record<string, string> = {
-  "girlfriend-matcha-latte": "/img/p-rose-matcha.png",
-  "hapi-matcha-latte": "/img/p-hapi-cup.png",
-  "salted-cream-matcha-latte": "/img/p-salted-cream.png",
-  "blueming-matcha-latte": "/img/p-blueming.png",
-  "strawberry-matcha-latte": "/img/p-strawberry-matcha.png",
-  "spring-garden-matcha-latte": "/img/p-lemon-cold.png",
-  "hapi-hojicha-latte": "/img/p-hojicha-pour.png",
-  "salted-cream-hojicha-latte": "/img/p-hojicha-slay.png",
+  // Hapi's own storefront photography (magic.mise-group.com), 667-1000px wide,
+  // already cropped to the 4:5 the design uses.
+  "hapi-matcha-latte": "/img/menu/hapi-matcha-latte.jpg",
+  "girlfriend-matcha-latte": "/img/menu/girlfriend-matcha-latte.jpg",
+  "salted-cream-matcha-latte": "/img/menu/salted-cream-matcha-latte.jpg",
+  "blueming-matcha-latte": "/img/menu/blueming-matcha-latte.jpg",
+  "mango-matcha-latte": "/img/menu/mango-matcha-latte.jpg",
+  "strawberry-matcha-latte": "/img/menu/strawberry-matcha-latte.jpg",
+  "spring-garden-matcha-latte": "/img/menu/spring-garden-matcha-latte.jpg",
+  "hapi-hojicha-latte": "/img/menu/hapi-hojicha-latte.jpg",
+  "salted-cream-hojicha-latte": "/img/menu/salted-cream-hojicha-latte.jpg",
+  "tablea-hojicha-latte": "/img/menu/tablea-hojicha-latte.jpg",
+  "campfire-cookie-butter-hojicha-latte": "/img/menu/campfire-cookie-butter-hojicha-latte.jpg",
+  "vietnamese-inspired-egg-foam-cafe-latte": "/img/menu/vietnamese-inspired-egg-foam-matcha-latte.jpg",
+
+  // Instagram-grid crops, ~350px. Still the only shot for these products.
   "salted-cream-americano": "/img/p-pinoy-fave.png",
   "fresh-lemonade": "/img/p-lemonade-hand.png",
-  "vietnamese-inspired-egg-foam-cafe-latte": "/img/p-egg-matcha.png",
   "green-apple-soda": "/img/p-yuzu-soda.png",
   "classic-cheesy-eggdrop-sandwich": "/img/p-sandwich.png",
   "biscoff-croffle": "/img/p-biscoff-croffle.png",
@@ -232,6 +239,11 @@ export const TAGLINE =
   "A home-based matcha bar in Marikina serving handcrafted matcha drinks to make everyday hapi.";
 export const AVAILABILITY = "Available for pick-up, deliveries, and events.";
 export const ADDRESS = "Vista Valley Covered Court, Sto. Niño, Marikina";
+// From Hapi's own storefront (magic.mise-group.com).
+export const PHONE = "0995 065 3373";
+export const PHONE_TEL = "+639950653373";
+export const ORDER_POLICY = "Orders are final once placed.";
+
 export const DELIVERY_NOTE =
   "For deliveries, shipping fees and prices may vary depending on your location.";
 
