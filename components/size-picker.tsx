@@ -35,14 +35,6 @@ export function SizePicker({ sizes }: { sizes: Size[] }) {
 
       <div className="price-block">
         <span className="price-now">{peso(size.price)}</span>
-        {size.was && size.was > size.price && (
-          <>
-            <s className="price-was">{peso(size.was)}</s>
-            <span className="tag tag-seasonal">
-              {Math.round((1 - size.price / size.was) * 100)}% OFF
-            </span>
-          </>
-        )}
         {sizes.length === 1 && <span className="card-size">{size.label}</span>}
       </div>
 

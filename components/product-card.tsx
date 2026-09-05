@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { priceLabel, sizeLabel, wasLabel, type Product } from "@/lib/menu";
+import { priceLabel, sizeLabel, type Product } from "@/lib/menu";
 
 /**
  * Only two signals are carried, because only two exist in the seeded catalog:
@@ -9,17 +9,6 @@ import { priceLabel, sizeLabel, wasLabel, type Product } from "@/lib/menu";
  */
 export function FaveTag({ float }: { float?: boolean }) {
   return <span className={`tag tag-bestseller${float ? " tag-float" : ""}`}>HAPI FAVE</span>;
-}
-
-/** Current price, with the pre-discount price struck through beside it. */
-export function Price({ product }: { product: Product }) {
-  const was = wasLabel(product);
-  return (
-    <>
-      {priceLabel(product)}
-      {was && <s className="price-was">{was}</s>}
-    </>
-  );
 }
 
 /** The photograph, or a labelled slot when a product has no shot yet. */
@@ -45,9 +34,7 @@ export function ProductCardTall({ product }: { product: Product }) {
       <div className="card-body">
         <div className="card-name">{product.name}</div>
         <p className="card-desc">{product.desc}</p>
-        <div className="card-price">
-          <Price product={product} />
-        </div>
+        <div className="card-price">{priceLabel(product)}</div>
       </div>
     </Link>
   );
@@ -69,9 +56,7 @@ export function ProductCardRow({ product }: { product: Product }) {
         <div className="card-name">{product.name}</div>
         <p className="card-desc">{product.desc}</p>
         <div className="card-meta">
-          <span className="card-price">
-            <Price product={product} />
-          </span>
+          <span className="card-price">{priceLabel(product)}</span>
           <span className="card-size">{sizeLabel(product)}</span>
         </div>
       </div>

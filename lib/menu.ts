@@ -8,7 +8,8 @@ export type Size = {
   /** Shown on the size control — "Regular", "Large", "24 oz". */
   label: string;
   price: number;
-  /** Pre-discount price, when the item is currently reduced. */
+  /** `original_price` from the catalog. Carried but not displayed — the site
+   *  shows the current price only. */
   was?: number;
 };
 
@@ -242,12 +243,6 @@ export const peso = (n: number) => `₱${n}`;
 export const priceLabel = (p: Product) => {
   const prices = p.sizes.map((s) => s.price);
   return prices.length > 1 ? `${peso(prices[0])} / ${peso(prices[prices.length - 1])}` : peso(prices[0]);
-};
-
-/** The pre-discount price, when the first size is currently reduced. */
-export const wasLabel = (p: Product) => {
-  const first = p.sizes[0];
-  return first?.was && first.was > first.price ? peso(first.was) : null;
 };
 
 export const sizeLabel = (p: Product) => p.sizes.map((s) => s.label).join(" · ");
