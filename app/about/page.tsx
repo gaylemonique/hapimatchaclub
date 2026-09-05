@@ -2,26 +2,28 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { SiteShell } from "@/components/site-shell";
-import { ADDRESS, AVAILABILITY, HOURS } from "@/lib/menu";
+import { ADDRESS, AVAILABILITY, HOURS, TAGLINE } from "@/lib/menu";
 
 export const metadata: Metadata = {
   title: "About | Hapi Matcha Club",
   description:
-    "Hapi started at home in Marikina with one whisk, a scale, and an unreasonable interest in getting matcha right.",
+    "A home-based matcha bar in Marikina serving handcrafted matcha drinks to make everyday hapi.",
 };
 
+// Each line here is traceable to the menu descriptions or Hapi's own bio —
+// no sourcing or process claims beyond what the catalog actually says.
 const notes = [
   {
-    title: "Uji, not generic",
-    body: "Small-lot ceremonial matcha, low-volume production, single-farm sourcing.",
+    title: "Japanese matcha",
+    body: "Ceremonial Japanese matcha, and a hojicha with a mellow roasted finish.",
   },
   {
-    title: "Made when you order it",
-    body: "Whisked, poured and layered per cup. Nothing pre-batched.",
+    title: "Handcrafted",
+    body: "Every drink is made by hand — matcha, hojicha, coffee and the food alongside them.",
   },
   {
-    title: "A hapi-er day",
-    body: "Sweetened with muscovado if you want it. Bitter and clean if you don't.",
+    title: "Sweetened your way",
+    body: "Oat milk and agave, monkfruit-sweetened strawberry, sugar-free mango puree.",
   },
 ];
 
@@ -30,10 +32,9 @@ export default function AboutPage() {
     <SiteShell>
       <div className="page-intro">
         <p className="eyebrow">About</p>
-        <h1>Kinda chic to start a matcha home cafe.</h1>
+        <h1>Hope you have a hapi-er day.</h1>
         <p>
-          Hapi started at home in Marikina with one whisk, a scale, and an unreasonable interest in
-          getting matcha right. We still make every cup to order.
+          {TAGLINE} {AVAILABILITY}
         </p>
       </div>
 

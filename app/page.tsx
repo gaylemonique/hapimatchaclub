@@ -92,13 +92,13 @@ export default async function Home() {
         <section className="band band-sage">
           <p className="eyebrow">Our matcha</p>
           <h2>
-            Uji-sourced.
+            Japanese matcha.
             <br />
-            Whisked, never shaken.
+            Handcrafted, never rushed.
           </h2>
           <p>
-            Small-lot ceremonial matcha from Uji, low-volume production, and a roasted hojicha we picked
-            for how it behaves with milk.
+            Ceremonial Japanese matcha and a mellow roasted hojicha, handcrafted in a home-based matcha
+            bar in Marikina.
           </p>
           <Link className="btn btn-on-dark" href="/about">
             Read our story
