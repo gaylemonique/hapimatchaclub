@@ -226,6 +226,12 @@ export async function getProduct(slug: string) {
   return (await getMenu()).products.find((product) => product.slug === slug);
 }
 
+// Hapi's own words, as they describe themselves.
+export const TAGLINE =
+  "A home-based matcha bar in Marikina serving handcrafted matcha drinks to make everyday hapi.";
+export const AVAILABILITY = "Available for pick-up, deliveries, and events.";
+export const ADDRESS = "Vista Valley Covered Court, Sto. Niño, Marikina";
+
 // External ordering channels. Ordering always leaves the site — no checkout lives here.
 export const ORDER_URL = "https://www.foodpanda.ph/restaurant/rgsp/hapi-matcha-club-marikina";
 export const DIRECT_ORDER_URL = "https://magic.mise-group.com/hapi-matcha-club";

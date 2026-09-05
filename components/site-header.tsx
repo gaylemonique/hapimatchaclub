@@ -19,7 +19,7 @@ export function SiteHeader() {
         <Image alt="" className="brand-mark" height={40} loading="eager" quality={90} src="/img/p-logo-avatar.png" width={40} />
         <span>
           <span className="brand-name">hapi matcha club</span>
-          <span className="brand-sub">Marikina · home cafe</span>
+          <span className="brand-sub">Marikina · matcha bar</span>
         </span>
       </Link>
       <span className="spacer" />

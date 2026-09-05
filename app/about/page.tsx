@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { SiteShell } from "@/components/site-shell";
-import { HOURS } from "@/lib/menu";
+import { ADDRESS, AVAILABILITY, HOURS } from "@/lib/menu";
 
 export const metadata: Metadata = {
   title: "About | Hapi Matcha Club",
@@ -65,7 +65,9 @@ export default function AboutPage() {
             </div>
           ))}
           <p className="hours-note">
-            Home-based cafe, Marikina City. Exact address to be confirmed with Hapi.
+            {ADDRESS}
+            <br />
+            {AVAILABILITY}
           </p>
         </section>
 

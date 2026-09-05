@@ -1,4 +1,4 @@
-import { DIRECT_ORDER_URL, INSTAGRAM_URL, ORDER_URL } from "@/lib/menu";
+import { ADDRESS, AVAILABILITY, DIRECT_ORDER_URL, INSTAGRAM_URL, ORDER_URL } from "@/lib/menu";
 
 export function SiteFooter() {
   return (
@@ -6,9 +6,11 @@ export function SiteFooter() {
       <div>
         <p className="footer-name">Hapi Matcha Club</p>
         <p className="footer-lines">
-          A home-based matcha cafe in Marikina
+          A home-based matcha bar serving handcrafted matcha drinks
           <br />
-          Mon–Sat 10AM–10PM · Sun 11AM–3PM
+          {ADDRESS}
+          <br />
+          {AVAILABILITY}
         </p>
         <div className="footer-links">
           <a href={INSTAGRAM_URL} rel="noopener noreferrer" target="_blank">

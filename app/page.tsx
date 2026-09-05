@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ProductCardTall } from "@/components/product-card";
 import { SiteShell } from "@/components/site-shell";
-import { favoritesFrom, getMenu, tilesFrom } from "@/lib/menu";
+import { AVAILABILITY, favoritesFrom, getMenu, tilesFrom } from "@/lib/menu";
 
 export default async function Home() {
   const { sections, products, warning } = await getMenu();
@@ -34,8 +34,8 @@ export default async function Home() {
             A lot of hapi.
           </h1>
           <p>
-            Whisked to order in a home cafe in Marikina. Uji matcha, roasted hojicha, and food worth the
-            trip.
+            A home-based matcha bar in Marikina serving handcrafted matcha drinks to make everyday
+            hapi. {AVAILABILITY}
           </p>
           <div className="hero-actions">
             <Link className="btn btn-ink" href="/menu">

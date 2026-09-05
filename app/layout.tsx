@@ -21,7 +21,7 @@ const figtree = Figtree({ subsets: ["latin"], variable: "--font-figtree", displa
 
 const title = "Hapi Matcha Club | Matcha, hojicha, coffee, good food";
 const description =
-  "A little matcha. A lot of hapi. Whisked to order in a home cafe in Marikina — Uji matcha, roasted hojicha, and food worth the trip.";
+  "A home-based matcha bar in Marikina serving handcrafted matcha drinks to make everyday hapi. Available for pick-up, deliveries, and events.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3001"),
