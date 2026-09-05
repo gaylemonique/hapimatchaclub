@@ -41,17 +41,24 @@ const size = (label: string, price: number, was?: number): Size => ({ label, pri
  * the catalog doesn't render as a wall of empty photo slots.
  */
 const fallbackImages: Record<string, string> = {
-  "girlfriend-matcha-latte": "/img/p-rose-matcha.png",
-  "hapi-matcha-latte": "/img/p-hapi-cup.png",
-  "salted-cream-matcha-latte": "/img/p-salted-cream.png",
-  "blueming-matcha-latte": "/img/p-blueming.png",
-  "strawberry-matcha-latte": "/img/p-strawberry-matcha.png",
-  "spring-garden-matcha-latte": "/img/p-lemon-cold.png",
-  "hapi-hojicha-latte": "/img/p-hojicha-pour.png",
-  "salted-cream-hojicha-latte": "/img/p-hojicha-slay.png",
+  // Hapi's own storefront photography (magic.mise-group.com), 667-1000px wide,
+  // already cropped to the 4:5 the design uses.
+  "hapi-matcha-latte": "/img/menu/hapi-matcha-latte.jpg",
+  "girlfriend-matcha-latte": "/img/menu/girlfriend-matcha-latte.jpg",
+  "salted-cream-matcha-latte": "/img/menu/salted-cream-matcha-latte.jpg",
+  "blueming-matcha-latte": "/img/menu/blueming-matcha-latte.jpg",
+  "mango-matcha-latte": "/img/menu/mango-matcha-latte.jpg",
+  "strawberry-matcha-latte": "/img/menu/strawberry-matcha-latte.jpg",
+  "spring-garden-matcha-latte": "/img/menu/spring-garden-matcha-latte.jpg",
+  "hapi-hojicha-latte": "/img/menu/hapi-hojicha-latte.jpg",
+  "salted-cream-hojicha-latte": "/img/menu/salted-cream-hojicha-latte.jpg",
+  "tablea-hojicha-latte": "/img/menu/tablea-hojicha-latte.jpg",
+  "campfire-cookie-butter-hojicha-latte": "/img/menu/campfire-cookie-butter-hojicha-latte.jpg",
+  "vietnamese-inspired-egg-foam-cafe-latte": "/img/menu/vietnamese-inspired-egg-foam-matcha-latte.jpg",
+
+  // Instagram-grid crops, ~350px. Still the only shot for these products.
   "salted-cream-americano": "/img/p-pinoy-fave.png",
   "fresh-lemonade": "/img/p-lemonade-hand.png",
-  "vietnamese-inspired-egg-foam-cafe-latte": "/img/p-egg-matcha.png",
   "green-apple-soda": "/img/p-yuzu-soda.png",
   "classic-cheesy-eggdrop-sandwich": "/img/p-sandwich.png",
   "biscoff-croffle": "/img/p-biscoff-croffle.png",
@@ -70,56 +77,56 @@ const fallbackSections: Category[] = [
   {
     cat: "Special Matcha",
     items: [
-      item("girlfriend-matcha-latte", "Girlfriend Matcha Latte", "House-made strawberry puree, strawberry milk, Japanese matcha, sea-salt cream, and freeze-dried strawberries.", [size("Regular", 240, 300)], true),
+      item("girlfriend-matcha-latte", "Girlfriend Matcha Latte", "House-made strawberry puree, strawberry milk, Japanese matcha, sea-salt cream, and freeze-dried strawberries.", [size("Regular", 270)], true),
     ],
   },
   {
     cat: "Iced Matcha Drinks",
     items: [
-      item("hapi-matcha-latte", "Hapi Matcha Latte", "Ceremonial matcha with oat milk and agave.", [size("Regular", 200, 250)], true),
-      item("salted-cream-matcha-latte", "Salted Cream Matcha Latte", "Japanese matcha latte finished with salted cream.", [size("Regular", 240, 300)]),
-      item("blueming-matcha-latte", "Blueming Matcha Latte", "Matcha with butterfly-pea flower and collagen.", [size("Regular", 256, 320)]),
-      item("mango-matcha-latte", "Mango Matcha Latte", "Japanese matcha with homemade sugar-free mango puree.", [size("Regular", 240, 300)], true),
-      item("strawberry-matcha-latte", "Strawberry Matcha Latte", "Japanese matcha with monkfruit-sweetened strawberry puree.", [size("Regular", 240, 300)], true),
-      item("spring-garden-matcha-latte", "Spring Garden Matcha Latte", "Floral loose-leaf tea, oat milk, and Japanese matcha.", [size("Regular", 240, 300)]),
-      item("hapi-hojicha-latte", "Hapi Hojicha Latte", "Japanese hojicha with a mellow roasted finish.", [size("Regular", 192, 240)], true),
-      item("peanut-butter-banana-hojicha-latte", "Peanut Butter Banana Hojicha Latte", "Japanese hojicha with peanut butter and banana.", [size("Regular", 216, 270)]),
-      item("salted-cream-hojicha-latte", "Salted Cream Hojicha Latte", "Japanese hojicha latte finished with salted cream.", [size("Regular", 200, 250)]),
+      item("hapi-matcha-latte", "Hapi Matcha Latte", "Ceremonial matcha with oat milk and agave.", [size("Regular", 190)], true),
+      item("salted-cream-matcha-latte", "Salted Cream Matcha Latte", "Japanese matcha latte finished with salted cream.", [size("Regular", 220)]),
+      item("blueming-matcha-latte", "Blueming Matcha Latte", "Matcha with butterfly-pea flower and collagen.", [size("Regular", 240)]),
+      item("mango-matcha-latte", "Mango Matcha Latte", "Japanese matcha with homemade sugar-free mango puree.", [size("Regular", 220)], true),
+      item("strawberry-matcha-latte", "Strawberry Matcha Latte", "Japanese matcha with monkfruit-sweetened strawberry puree.", [size("Regular", 220)], true),
+      item("spring-garden-matcha-latte", "Spring Garden Matcha Latte", "Floral loose-leaf tea, oat milk, and Japanese matcha.", [size("Regular", 200)]),
+      item("hapi-hojicha-latte", "Hapi Hojicha Latte", "Japanese hojicha with a mellow roasted finish.", [size("Regular", 180)], true),
+      item("peanut-butter-banana-hojicha-latte", "Peanut Butter Banana Hojicha Latte", "Japanese hojicha with peanut butter and banana.", [size("Regular", 240)]),
+      item("salted-cream-hojicha-latte", "Salted Cream Hojicha Latte", "Japanese hojicha latte finished with salted cream.", [size("Regular", 210)]),
     ],
   },
   {
     cat: "Iced Hojicha Drinks",
     items: [
-      item("campfire-cookie-butter-hojicha-latte", "Campfire Cookie Butter Hojicha Latte", "Large-only roasted hojicha latte with cookie-butter flavor.", [size("Large", 280, 350)]),
-      item("tablea-hojicha-latte", "Tablea Hojicha Latte", "Japanese hojicha latte with tablea chocolate.", [size("Regular", 200, 250)]),
+      item("campfire-cookie-butter-hojicha-latte", "Campfire Cookie Butter Hojicha Latte", "Large-only roasted hojicha latte with cookie-butter flavor.", [size("Large", 280)]),
+      item("tablea-hojicha-latte", "Tablea Hojicha Latte", "Japanese hojicha latte with tablea chocolate.", [size("Regular", 230)]),
     ],
   },
   {
     cat: "Coffee & Non-Matcha Drinks",
     items: [
       item("salted-cream-americano", "Salted Cream Americano", "Iced Americano finished with salted cream.", [size("Regular", 200, 250)]),
-      item("iced-americano", "Iced Americano", "Classic iced Americano.", [size("Regular", 176, 220)]),
-      item("spanish-latte", "Spanish Latte", "Iced coffee with a sweet, creamy finish.", [size("Regular", 200, 250)]),
-      item("strawberry-milk", "Strawberry Milk", "Cold strawberry milk.", [size("Regular", 160, 200)]),
-      item("chocolate-milk", "Chocolate Milk", "Cold chocolate milk.", [size("Regular", 160, 200)]),
-      item("fresh-lemonade", "Fresh Lemonade", "Fresh lemonade.", [size("Regular", 144, 180)]),
-      item("vietnamese-inspired-egg-foam-cafe-latte", "Vietnamese-Inspired Egg Foam Cafe Latte", "Cafe latte topped with Vietnamese-inspired egg foam.", [size("Regular", 216, 270)]),
-      item("salted-cream-latte", "Salted Cream Latte", "Latte finished with salted cream.", [size("Regular", 208, 260)]),
-      item("green-apple-soda", "Green Apple Soda", "Sparkling green apple drink.", [size("Regular", 160, 200)]),
-      item("strawberry-soda", "Strawberry Soda", "24 oz sparkling strawberry drink.", [size("24 oz", 152, 190)]),
-      item("blueberry-soda", "Blueberry Soda", "Sparkling blueberry drink.", [size("Regular", 152, 190)]),
-      item("strawberry-lemonade", "Strawberry Lemonade", "Strawberry lemonade.", [size("Regular", 144, 180)]),
+      item("iced-americano", "Iced Americano", "Classic iced Americano.", [size("Regular", 160)]),
+      item("spanish-latte", "Spanish Latte", "Iced coffee with a sweet, creamy finish.", [size("Regular", 170)]),
+      item("strawberry-milk", "Strawberry Milk", "Cold strawberry milk.", [size("Regular", 180)]),
+      item("chocolate-milk", "Chocolate Milk", "Cold chocolate milk.", [size("Regular", 180)]),
+      item("fresh-lemonade", "Fresh Lemonade", "Fresh lemonade.", [size("Regular", 150)]),
+      item("vietnamese-inspired-egg-foam-cafe-latte", "Vietnamese-Inspired Egg Foam Cafe Latte", "Cafe latte topped with Vietnamese-inspired egg foam.", [size("Regular", 240)]),
+      item("salted-cream-latte", "Salted Cream Latte", "Latte finished with salted cream.", [size("Regular", 200)]),
+      item("green-apple-soda", "Green Apple Soda", "Sparkling green apple drink.", [size("Regular", 160)]),
+      item("strawberry-soda", "Strawberry Soda", "24 oz sparkling strawberry drink.", [size("24 oz", 150)]),
+      item("blueberry-soda", "Blueberry Soda", "Sparkling blueberry drink.", [size("Regular", 150)]),
+      item("strawberry-lemonade", "Strawberry Lemonade", "Strawberry lemonade.", [size("Regular", 170)]),
     ],
   },
   {
     cat: "Snacks & Appetizers",
     items: [
       item("plain-croffle", "Plain Croffle", "Plain croffle.", [size("Regular", 144, 180)]),
-      item("banana-crumble-croffle", "Banana Crumble Croffle", "Croffle with banana crumble.", [size("Regular", 184, 230)]),
-      item("classic-cheesy-eggdrop-sandwich", "Classic Cheesy Eggdrop Sandwich", "Cheesy eggdrop sandwich.", [size("Regular", 160, 200)]),
+      item("banana-crumble-croffle", "Banana Crumble Croffle", "Croffle with banana crumble.", [size("Regular", 160)]),
+      item("classic-cheesy-eggdrop-sandwich", "Classic Cheesy Eggdrop Sandwich", "Cheesy eggdrop sandwich.", [size("Regular", 170)]),
       item("bacon-eggdrop-sandwich", "Bacon Eggdrop Sandwich", "Eggdrop sandwich with bacon.", [size("Regular", 200, 250)]),
-      item("chicken-eggdrop-sandwich", "Chicken Eggdrop Sandwich", "Eggdrop sandwich with chicken.", [size("Regular", 216, 270)]),
-      item("biscoff-croffle", "Biscoff Croffle", "Croffle with Biscoff.", [size("Regular", 208, 260)]),
+      item("chicken-eggdrop-sandwich", "Chicken Eggdrop Sandwich", "Eggdrop sandwich with chicken.", [size("Regular", 230)]),
+      item("biscoff-croffle", "Biscoff Croffle", "Croffle with Biscoff.", [size("Regular", 180)]),
       item("french-toast", "French Toast", "One thick slice with honey and seasonal fruit.", [size("Regular", 144, 180)]),
     ],
   },
@@ -232,6 +239,12 @@ export const TAGLINE =
   "A home-based matcha bar in Marikina serving handcrafted matcha drinks to make everyday hapi.";
 export const AVAILABILITY = "Available for pick-up, deliveries, and events.";
 export const ADDRESS = "Vista Valley Covered Court, Sto. Niño, Marikina";
+// From Hapi's own storefront (magic.mise-group.com).
+export const PHONE = "0995 065 3373";
+export const PHONE_TEL = "+639950653373";
+export const ORDER_POLICY = "Orders are final once placed.";
+
+export const PRICE_NOTE = "Prices may vary depending on drink customization.";
 export const DELIVERY_NOTE =
   "For deliveries, shipping fees and prices may vary depending on your location.";
 

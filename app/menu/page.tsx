@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { ProductCardRow } from "@/components/product-card";
 import { SiteShell } from "@/components/site-shell";
-import { categoryNames, getMenu, sectionsFor } from "@/lib/menu";
+import { categoryNames, getMenu, PRICE_NOTE, sectionsFor } from "@/lib/menu";
 
 export const metadata: Metadata = {
   title: "Menu | Hapi Matcha Club",
@@ -47,6 +47,8 @@ export default async function MenuPage({
           {warning}
         </p>
       )}
+
+      <p className="notice page">{PRICE_NOTE}</p>
 
       {visible.length === 0 ? (
         <p className="menu-empty">Nothing in this category right now. Try another filter.</p>

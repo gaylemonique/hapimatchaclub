@@ -1,7 +1,18 @@
 import Image from "next/image";
 import type { Metadata } from "next";
 import { SiteShell } from "@/components/site-shell";
-import { ADDRESS, DELIVERY_NOTE, DIRECT_ORDER_URL, HOURS, INSTAGRAM_URL, ORDER_URL } from "@/lib/menu";
+import {
+  ADDRESS,
+  DELIVERY_NOTE,
+  DIRECT_ORDER_URL,
+  HOURS,
+  INSTAGRAM_URL,
+  ORDER_POLICY,
+  ORDER_URL,
+  PRICE_NOTE,
+  PHONE,
+  PHONE_TEL,
+} from "@/lib/menu";
 
 export const metadata: Metadata = {
   title: "Order | Hapi Matcha Club",
@@ -61,7 +72,9 @@ export default function OrderPage() {
           <p className="disclaimer">OPENS AN EXTERNAL APP · NO CHECKOUT ON THIS SITE</p>
         </section>
 
-        <p className="notice">{DELIVERY_NOTE}</p>
+        <p className="notice">
+          {PRICE_NOTE} {DELIVERY_NOTE} {ORDER_POLICY}
+        </p>
 
         <section className="hours-card">
           <h2 className="eyebrow">Pickup from us</h2>
@@ -72,6 +85,10 @@ export default function OrderPage() {
             </div>
           ))}
           <p className="hours-note">{ADDRESS}</p>
+          <p className="hours-note">
+            Call or text{" "}
+            <a href={`tel:${PHONE_TEL}`}>{PHONE}</a>
+          </p>
         </section>
 
         <section className="contact-card">

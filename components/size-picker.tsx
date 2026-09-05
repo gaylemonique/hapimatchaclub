@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { DELIVERY_NOTE, DIRECT_ORDER_URL, ORDER_URL, peso, type Size } from "@/lib/menu";
+import { DELIVERY_NOTE, DIRECT_ORDER_URL, ORDER_URL, peso, PRICE_NOTE, type Size } from "@/lib/menu";
 
 /**
  * Size choice plus the order call to action. Ordering happens off-site, so the
@@ -38,6 +38,8 @@ export function SizePicker({ sizes }: { sizes: Size[] }) {
         {sizes.length === 1 && <span className="card-size">{size.label}</span>}
       </div>
 
+      <p className="notice">{PRICE_NOTE}</p>
+
       <div className="order-bar">
         <a
           className="btn btn-primary btn-block"
@@ -55,7 +57,9 @@ export function SizePicker({ sizes }: { sizes: Size[] }) {
         >
           or order on foodpanda ↗
         </a>
-        <p className="notice notice-center">{DELIVERY_NOTE}</p>
+        <p className="notice notice-center">
+          Opens Hapi&apos;s ordering page, where you can pick this drink. {DELIVERY_NOTE}
+        </p>
       </div>
     </>
   );
