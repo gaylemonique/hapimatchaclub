@@ -24,7 +24,6 @@ export function SiteFooter() {
           </a>
         </div>
       </div>
-      <p className="disclaimer">PRICES &amp; ITEMS FOR DESIGN REVIEW ONLY</p>
     </footer>
   );
 }
