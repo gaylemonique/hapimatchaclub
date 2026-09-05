@@ -1,6 +1,6 @@
 import Image from "next/image";
 import type { Metadata } from "next";
-import { SiteFooter } from "@/components/site-footer";
+import { SiteShell } from "@/components/site-shell";
 import { DIRECT_ORDER_URL, HOURS, INSTAGRAM_URL, ORDER_URL } from "@/lib/menu";
 
 export const metadata: Metadata = {
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function OrderPage() {
   return (
-    <>
+    <SiteShell>
       <div className="page-intro">
         <p className="eyebrow">Order</p>
         <h1>One tap and it&apos;s on the way.</h1>
@@ -85,7 +85,6 @@ export default function OrderPage() {
         </section>
       </div>
 
-      <SiteFooter />
-    </>
+    </SiteShell>
   );
 }

@@ -1,12 +1,16 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ProductCardTall } from "@/components/product-card";
-import { SiteFooter } from "@/components/site-footer";
-import { categoryTiles, favorites, totalItems } from "@/lib/menu";
+import { SiteShell } from "@/components/site-shell";
+import { favoritesFrom, getMenu, tilesFrom } from "@/lib/menu";
 
-export default function Home() {
+export default async function Home() {
+  const { sections, products, warning } = await getMenu();
+  const favorites = favoritesFrom(products);
+  const tiles = tilesFrom(sections);
+
   return (
-    <>
+    <SiteShell>
       <section className="hero">
         <div className="hero-media">
           <Image
@@ -19,7 +23,7 @@ export default function Home() {
             src="/img/p-hapi-cup.png"
           />
           <span className="hours-pill hours-pill-mobile">TODAY · 10AM–10PM</span>
-          <span className="hours-pill hours-pill-desktop">HAPI MATCHA LATTE · ₱165</span>
+          <span className="hours-pill hours-pill-desktop">HAPI MATCHA LATTE</span>
         </div>
 
         <div className="hero-card">
@@ -44,35 +48,45 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section">
-        <div className="section-head">
-          <h2>Hapi favorites</h2>
-          <Link className="btn-link" href="/menu">
-            All {totalItems} →
-          </Link>
-        </div>
-        <div className="rail">
-          {favorites.map((product) => (
-            <ProductCardTall key={product.id} product={product} />
-          ))}
-        </div>
-      </section>
+      {warning && (
+        <p className="data-status page" role="status">
+          {warning}
+        </p>
+      )}
 
-      <section className="section">
-        <div className="section-head">
-          <h2>Browse by</h2>
-        </div>
-        <div className="tiles">
-          {categoryTiles.map((tile) => (
-            <Link className="tile" href={`/menu?cat=${encodeURIComponent(tile.cat)}`} key={tile.cat}>
-              <Image alt="" fill quality={90} sizes="(min-width: 768px) 25vw, 50vw" src={tile.img} />
-              <span className="tile-scrim" />
-              <span className="tile-label">{tile.label}</span>
-              <span className="tile-count">{tile.count} ITEMS</span>
+      {favorites.length > 0 && (
+        <section className="section">
+          <div className="section-head">
+            <h2>Hapi favorites</h2>
+            <Link className="btn-link" href="/menu">
+              All {products.length} →
             </Link>
-          ))}
-        </div>
-      </section>
+          </div>
+          <div className="rail">
+            {favorites.map((product) => (
+              <ProductCardTall key={product.slug} product={product} />
+            ))}
+          </div>
+        </section>
+      )}
+
+      {tiles.length > 0 && (
+        <section className="section">
+          <div className="section-head">
+            <h2>Browse by</h2>
+          </div>
+          <div className="tiles">
+            {tiles.map((tile) => (
+              <Link className="tile" href={`/menu?cat=${encodeURIComponent(tile.cat)}`} key={tile.cat}>
+                <Image alt="" fill quality={90} sizes="(min-width: 768px) 25vw, 50vw" src={tile.img} />
+                <span className="tile-scrim" />
+                <span className="tile-label">{tile.cat}</span>
+                <span className="tile-count">{tile.count} ITEMS</span>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
 
       <div className="bands">
         <section className="band band-sage">
@@ -102,8 +116,6 @@ export default function Home() {
           <Image alt="" height={160} quality={90} src="/img/p-logo-orange.png" width={130} />
         </section>
       </div>
-
-      <SiteFooter />
-    </>
+    </SiteShell>
   );
 }

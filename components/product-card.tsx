@@ -37,7 +37,7 @@ function Media({ product, sizes }: { product: Product; sizes: string }) {
 /** Tall card — favorites rail on mobile, product grids on larger screens. */
 export function ProductCardTall({ product }: { product: Product }) {
   return (
-    <Link className="card-tall" href={`/menu/${product.id}`}>
+    <Link className="card-tall" href={`/menu/${product.slug}`}>
       <div className="card-media">
         <Media product={product} sizes="(min-width: 1080px) 320px, (min-width: 768px) 33vw, 158px" />
         {product.featured && <FaveTag float />}
@@ -56,7 +56,7 @@ export function ProductCardTall({ product }: { product: Product }) {
 /** Row card — the scannable default on the menu. */
 export function ProductCardRow({ product }: { product: Product }) {
   return (
-    <Link className="card-row" href={`/menu/${product.id}`}>
+    <Link className="card-row" href={`/menu/${product.slug}`}>
       <div className="card-media">
         <Media product={product} sizes="104px" />
       </div>

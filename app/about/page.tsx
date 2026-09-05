@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
-import { SiteFooter } from "@/components/site-footer";
+import { SiteShell } from "@/components/site-shell";
 import { HOURS } from "@/lib/menu";
 
 export const metadata: Metadata = {
@@ -27,7 +27,7 @@ const notes = [
 
 export default function AboutPage() {
   return (
-    <>
+    <SiteShell>
       <div className="page-intro">
         <p className="eyebrow">About</p>
         <h1>Kinda chic to start a matcha home cafe.</h1>
@@ -74,7 +74,6 @@ export default function AboutPage() {
         </Link>
       </div>
 
-      <SiteFooter />
-    </>
+    </SiteShell>
   );
 }

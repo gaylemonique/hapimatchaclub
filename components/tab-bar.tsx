@@ -14,6 +14,10 @@ export function TabBar() {
   const pathname = usePathname();
   const active = (href: string) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
 
+  // The staff area shares SiteShell but is not a customer surface — a bottom tab
+  // bar would sit over its forms on a phone.
+  if (pathname.startsWith("/admin")) return null;
+
   return (
     <nav aria-label="Sections" className="tabbar">
       {tabs.map((tab) => (
