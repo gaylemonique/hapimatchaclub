@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { DIRECT_ORDER_URL, ORDER_URL, peso, type Size } from "@/lib/menu";
+import { DELIVERY_NOTE, DIRECT_ORDER_URL, ORDER_URL, peso, type Size } from "@/lib/menu";
 
 /**
  * Size choice plus the order call to action. Ordering happens off-site, so the
@@ -55,6 +55,7 @@ export function SizePicker({ sizes }: { sizes: Size[] }) {
         >
           or order on foodpanda ↗
         </a>
+        <p className="notice notice-center">{DELIVERY_NOTE}</p>
       </div>
     </>
   );
