@@ -373,7 +373,7 @@ button { font: inherit; color: inherit; }
 /* --- Home: hero ----------------------------------------------------------- */
 
 .hero-media { position: relative; height: 340px; background: var(--color-ink); }
-.hero-media img { object-fit: cover; filter: saturate(0.94) contrast(0.96); }
+.hero-media img { object-fit: cover; }
 .hours-pill-desktop { display: none; }
 
 .hours-pill {
