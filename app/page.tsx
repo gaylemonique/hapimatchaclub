@@ -14,13 +14,13 @@ export default async function Home() {
       <section className="hero">
         <div className="hero-media">
           <Image
-            alt="A Hapi matcha latte held in one hand"
+            alt="A Hapi matcha latte, layered green over milk, in a glass on a wooden board"
             fetchPriority="high"
             fill
             loading="eager"
             quality={90}
             sizes="(min-width: 1080px) 50vw, 100vw"
-            src="/img/p-hapi-cup.png"
+            src="/img/menu/hapi-matcha-latte.jpg"
           />
           <span className="hours-pill hours-pill-mobile">TODAY · 10AM–10PM</span>
           <span className="hours-pill hours-pill-desktop">HAPI MATCHA LATTE</span>
